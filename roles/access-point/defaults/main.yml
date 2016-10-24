@@ -1,0 +1,6 @@
+---
+
+ip_prefix: 172.24.1.
+ssid: PiHotSpot
+wpa_passphrase: raspberry
+channel: 6

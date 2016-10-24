@@ -1,0 +1,4 @@
+---
+
+- name: save iptables
+  shell: 'iptables-save > /etc/iptables.ipv4.nat'

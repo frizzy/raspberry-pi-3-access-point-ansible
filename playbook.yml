@@ -1,0 +1,5 @@
+---
+
+- hosts: raspberry-pi-access-point
+  roles:
+    - access-point

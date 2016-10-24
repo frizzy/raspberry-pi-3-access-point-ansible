@@ -1,0 +1,12 @@
+---
+
+- apt: name=dnsmasq state=present
+  
+- stat: path=/etc/dnsmasq.conf.orig
+  register: st
+
+- copy: remote_src=True src=/etc/dnsmasq.conf dest=/etc/dnsmasq.conf.orig
+  when: not st.stat.exists
+
+- template: src=dnsmasq.conf.j2 dest=/etc/dnsmasq.conf
+  notify: restart dnsmasq

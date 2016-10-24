@@ -1,0 +1,7 @@
+---
+
+- name: ifdown wlan
+  shell: "ifdown wlan0"
+
+- name: ifup wlan
+  shell: "ifup wlan0"

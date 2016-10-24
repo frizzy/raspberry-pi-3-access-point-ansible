@@ -1,0 +1,36 @@
+---
+
+
+#sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE  
+#sudo iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT  
+#sudo iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT  
+
+- iptables:
+    table: nat
+    chain: POSTROUTING
+    out_interface: eth0
+    jump: MASQUERADE
+  notify: save iptables
+ 
+- iptables:
+    chain: FORWARD
+    in_interface: eth0
+    out_interface: wlan0
+    ctstate: RELATED,ESTABLISHED
+    jump: ACCEPT
+  notify: save iptables
+
+- iptables:
+    chain: FORWARD
+    in_interface: wlan0
+    out_interface: eth0
+    jump: ACCEPT
+  notify: save iptables
+
+- name: Load iptables at boot
+  become: yes
+  lineinfile:
+    dest: /etc/rc.local
+    insertbefore: '^exit 0'
+    line: 'iptables-restore < /etc/iptables.ipv4.nat'
+  notify: save iptables

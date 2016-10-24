@@ -1,0 +1,19 @@
+---
+
+- apt: update_cache=yes
+  become: yes
+
+- include: network.yml
+  become: yes
+  
+- include: hostapd.yml
+  become: yes
+
+- include: dnsmasq.yml
+  become: yes
+
+- include: sysctl.yml
+  become: yes
+
+- include: iptables.yml
+  become: yes

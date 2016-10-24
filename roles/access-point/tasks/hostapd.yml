@@ -1,0 +1,12 @@
+---
+
+- apt: name=hostapd state=present
+  
+- template: src=hostapd.conf.j2 dest=/etc/hostapd/hostapd.conf
+  notify: restart hostapd
+
+- name: Patch hostapd boot option
+  lineinfile:
+    dest: /etc/default/hostapd
+    insertafter: '^#DAEMON_CONF='
+    line: 'DAEMON_CONF="/etc/hostapd/hostapd.conf"'

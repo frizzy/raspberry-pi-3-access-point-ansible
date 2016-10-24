@@ -1,0 +1,8 @@
+---
+
+- name: Uncomment ipv4 forward option
+  lineinfile:
+    dest: /etc/sysctl.conf
+    insertafter: '^#net\.ipv4\.ip_forward=1'
+    line: 'net.ipv4.ip_forward=1'
+  notify: set forwarding rule

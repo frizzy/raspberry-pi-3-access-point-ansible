@@ -1,0 +1,14 @@
+---
+
+- lineinfile: dest=/etc/dhcpcd.conf line="denyinterfaces wlan0"
+
+- name: Patch WLAN interface
+  replace:
+    dest: /etc/network/interfaces
+    regexp: 'iface wlan0 inet (manual|static)\n.*wpa_supplicant\.conf'
+    replace: 'iface wlan0 inet static\n    address {{ ip_prefix }}1\n    netmask 255.255.255.0\n    network {{ ip_prefix }}0\n    broadcast {{ ip_prefix }}255\n#    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf'
+  notify:
+    - ifdown wlan
+    - ifup wlan
+    
+- meta: flush_handlers

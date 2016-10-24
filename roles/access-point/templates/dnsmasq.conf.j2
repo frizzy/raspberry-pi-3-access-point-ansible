@@ -1,0 +1,20 @@
+# Use interface wlan0
+interface=wlan0
+
+#Explicitly specify the address to listen on 
+listen-address={{ ip_prefix }}1
+
+# Bind to the interface to make sure we aren't sending things elsewhere 
+bind-interfaces
+
+# Forward DNS requests  
+server={{ dns_server | default('8.8.8.8') }}
+
+# Don't forward short names 
+domain-needed
+
+# Never forward addresses in the non-routed address spaces. 
+bogus-priv
+
+# Assign DHCP IP addresses
+dhcp-range={{ ip_prefix }}{{ dhcp_range_from | default('50') }},{{ ip_prefix }}{{ dhcp_range_from_to | default('200') }},{{ dhcp_lease | default('12h') }}

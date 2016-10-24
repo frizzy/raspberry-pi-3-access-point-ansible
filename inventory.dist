@@ -1,0 +1,2 @@
+[raspberry-pi-3-access-point]
+raspberrypi.local ansible_user=pi
